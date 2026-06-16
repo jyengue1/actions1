@@ -18,7 +18,7 @@ jobs:
       # Step 2: Install a tool to generate ASCII art
       - name: Install Cowsay
         run: |
-          sudo apt-get update
+        #   sudo apt-get update
           sudo apt-get install -y cowsay
 
       # Step 3: Generate the art and write it to a file
