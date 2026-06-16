@@ -12,18 +12,8 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v6
 
-    - name: Install Cowsay
-      run: sudo apt-get install -y cowsay
-
-    - name: Generate Banner
-      run: cowsay -f dragon "Run for cover!" >> dragon.txt
-
-    - name: Test file exits
-      run: grep -i "cover" dragon.txt
-
-    - name: Read file
-      run: cat dragon.txt
-
     - name: Checkout Repo files
       run: ls -lart
 
+    - name: Executing shell script
+      run: ./ascii-script.sh
