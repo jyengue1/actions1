@@ -1,21 +1,51 @@
-name: Generate ASCII Art
-
-# Trigger the workflow on every push to the main branch
+# .github/workflows/generate-ascii.yml
+name: Generate ASCII Artwork
 on:
   push:
+    branches:
+      - main
 
 jobs:
-  ascii-job:
+  build_job_1:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v6
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-    - name: Checkout Repo files
-      run: ls -lart
+    - name: Install cowsay
+      run: sudo apt-get update && sudo apt-get install cowsay -y
 
-    - name: Executing shell script
-      run: |
-        chmod +x ascii-script.sh
-        ./ascii-script.sh
+    - name: Generate ASCII dragon
+      run: cowsay -f dragon "Run for cover, I am a DRAGON.... RAWR" >> dragon.txt
+
+    - name: Upload dragon file
+      uses: actions/upload-artifact@v3
+      with:
+        name: dragon-text-file
+        path: dragon.txt
+
+  test_job_2:
+    needs: build_job_1
+    runs-on: ubuntu-latest
+    steps:
+    - name: Upload dragon file
+      uses: actions/download-artifact@v3
+      with:
+        name: dragon-text-file
+
+    - name: Verify dragon.txt
+      run: grep -i "dragon" dragon.txt
+
+  deploy_job_3:
+    needs: [test_job_2]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Upload dragon file
+      uses: actions/download-artifact@v3
+      with:
+        name: dragon-text-file
+    - name: Display dragon.txt
+      run: cat dragon.txt
+
+    - name: Simulate deployment
+      run: echo "Deploying dragon.txt..."
