@@ -15,13 +15,11 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v6
 
-      # Step 2: Install a tool to generate ASCII art
       - name: Install Cowsay
         run: |
         #   sudo apt-get update
           sudo apt-get install -y cowsay
 
-      # Step 3: Generate the art and write it to a file
       - name: Generate Banner
         run: |
           cowsay -f dragon "Run for cover!" >> dragon.txt
@@ -33,6 +31,4 @@ jobs:
 
       - name Checkout Repo files
         run: ls -lart
-      # Step 4: Display the file contents in the execution logs
-    #   - name: Print Art to Log
-    #     run: cat ascii_art.txt
+
